@@ -82,7 +82,7 @@ module Palapala
         # Display the version
         system("#{chrome_path} --version") if Palapala.debug
         # Launch chrome-headless-shell with the --remote-debugging-port parameter
-        params = [ "--disable-gpu", "--remote-debugging-port=9222", "--remote-debugging-address=0.0.0.0" ]
+        params = [ "--disable-gpu", "--disable-software-rasterizer", "--disable-bluetooth", "--disable-dev-shm-usage", "--remote-debugging-port=9222", "--remote-debugging-address=0.0.0.0" ]
         params.concat(Palapala.chrome_params) if Palapala.chrome_params
         pid = if Palapala.debug
           spawn(chrome_path, *params)
@@ -97,7 +97,7 @@ module Palapala
     end
 
     def self.spawn_chrome_from_path
-      params = [ "--headless", "--disable-gpu", "--remote-debugging-port=9222" ]
+      params = [ "--headless", "--disable-gpu", "--disable-software-rasterizer", "--disable-bluetooth", "--disable-dev-shm-usage", "--remote-debugging-port=9222", "--remote-debugging-address=0.0.0.0"  ]
       params.concat(Palapala.chrome_params) if Palapala.chrome_params
       # Spawn an existing chrome with the path and parameters
       Process.spawn(chrome_path, *params)

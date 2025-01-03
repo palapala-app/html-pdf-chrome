@@ -1,8 +1,8 @@
 module Palapala
   module Helper
-    def self.header(left: "", center: "", right: "", margin: "1cm")
+    def self.header(left: "", center: "", right: "", margin: "1cm", font_family: "Arial")
       <<~HTML
-        <div style="display: flex; justify-content: space-between; width: 100%; margin-left: #{margin}; margin-right: #{margin};">
+        <div style="display: flex; justify-content: space-between; width: 100%; margin-left: #{margin}; margin-right: #{margin}; font-family: #{font_family}">
           <div style="text-align: left; flex: 1;">#{left}</div>
           <div style="text-align: center; flex: 1;">#{center}</div>
           <div style="text-align: right; flex: 1;">#{right}</div>
@@ -10,13 +10,14 @@ module Palapala
       HTML
     end
 
-    def self.footer(left: "", center: "", right: "", margin: "1cm")
-      self.header(left:, center:, right:, margin:)
+    def self.footer(left: "", center: "", right: "", margin: "1cm", font_family: "Arial")
+      self.header(left:, center:, right:, margin:, font_family:)
     end
 
-    def self.page_number
+    def self.page_number(style: nil)
+      style_attr = style.nil? ? "" : "style='#{style}'"
       <<~HTML
-        <span class="pageNumber"></span>/<span class="totalPages"></span>
+        <span class="pageNumber" #{style_attr}></span>/<span class="totalPages"></span>
       HTML
     end
 

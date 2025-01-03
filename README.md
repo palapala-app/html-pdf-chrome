@@ -1,12 +1,10 @@
-# PDF Generation for your Rubies
+# PDF Generation for your Rails and Rubies
 
 <div align="center"><img src="https://raw.githubusercontent.com/palapala-app/palapala_pdf/main/assets/images/logo.webp" alt="Palapala PDF Logo" width="200"></div>
 
-This project is a Ruby gem that provides functionality for generating PDF files from HTML using the Chrome browser. It allows you to easily convert HTML content into PDF documents, making it convenient for tasks such as generating reports, invoices, or any other printable documents. The gem provides a simple and intuitive API for converting HTML to PDF, and it leverages the power and flexibility of the Chrome browser's rendering engine to ensure accurate and high-quality PDF output. With this gem, you can easily integrate PDF generation capabilities into your Ruby applications.
+This project is a Ruby gem that generates PDF files from HTML using the Chrome browser engine, making it convenient for tasks such as generating reports, invoices, or any other printable documents.
 
-At the core, this project leverages the Chrome rendering engine, but with significantly reduced overhead and dependencies. Instead of relying on the full Grover/Puppeteer/NodeJS stack, this project uses a raw web socket to enable direct communication from Ruby to a headless Chrome or Chromium browser. This approach ensures efficieny while providing a streamlined alternative for rendering tasks without sacrificing performance or flexibility.
-
-It leverages work from [Puppeteer](https://pptr.dev/browsers-api/) (@puppeteer/browsers) to install a local Chrome-Headless-Shell if no Chrome is running, but that requires node (npx) to be available.
+On Heroku you just need to install a buildpack for Chrome and the rest is auto-configured.
 
 This is how easy PDF generation can be in Ruby:
 
@@ -14,11 +12,14 @@ This is how easy PDF generation can be in Ruby:
 require "palapala"
 Palapala::Pdf.new("<h1>Hello, world! #{Time.now}</h1>").save('hello.pdf')
 ```
+
 And this while having the most modern HTML/CSS/JS availlable to you: flex, grid, canvas, ...
 
 A core goal of this project is performance, and it is designed to be exceptionally fast. By leveraging **direct communication** with a headless Chrome or Chromium browser via a **raw web socket**, the gem minimizes overhead and dependencies, enabling PDF generation at speeds that significantly outperform other solutions. Whether generating simple or complex documents, this gem ensures that your Ruby applications can handle PDF tasks efficiently and at scale.
 
 [Example: paged_css.pdf](https://raw.githubusercontent.com/palapala-app/palapala_pdf/main/examples/paged_css.pdf)
+
+It leverages work from [Puppeteer](https://pptr.dev/browsers-api/) (@puppeteer/browsers) to install a local Chrome-Headless-Shell if no Chrome is running (requires node/npx to be available).
 
 ## Sponsor This Project
 
@@ -33,8 +34,8 @@ Your support is greatly appreciated and helps maintain the project!
 
 To install the gem and add it to your application's Gemfile, execute the following command:
 
-```
-$ bundle add palapala_pdf
+```sh
+bundle add palapala_pdf
 ```
 
 ## Usage Instructions
