@@ -1,5 +1,6 @@
 require_relative "./renderer"
 require_relative "./helper"
+require "combine_pdf"
 
 module Palapala
   # Page class to generate PDF from HTML content using Chrome in headless mode in a thread-safe way
@@ -80,21 +81,40 @@ module Palapala
     #
     # @param opts [Hash] the options to pass to the renderer
     # @return [String] the PDF content as a binary string
-    def binary_data
+    def binary_data(title: "", author: "", subject: "", producer: "PalapalaPDF", creator: "PalapalaPDF", skip_metadata: false)
       puts "Rendering PDF with params: #{@opts}" if Palapala.debug
-      Renderer.html_to_pdf(@content, params: @opts)
+      binary_data = Renderer.html_to_pdf(@content, params: @opts)
+
+      if skip_metadata
+        binary_data
+      else
+        # Load the PDF from the string
+        pdf = CombinePDF.parse(binary_data)
+
+        # Set metadata manually
+        info_hash = {
+          Title: title,
+          Author: author,
+          Subject: subject,
+          Producer: producer,
+          Creator: creator
+        }
+
+        # Embed metadata into the PDF
+        pdf.info.merge!(info_hash)
+        pdf.to_pdf
+      end
     rescue StandardError => e
       puts "Error rendering PDF: #{e.message}"
       Renderer.reset
       raise
     end
 
-
     # Save the PDF content to a file
     # @param path [String] the path to save the PDF file
     # @return [void]
-    def save(path)
-      File.binwrite(path, binary_data)
+    def save(path, **opts)
+      File.binwrite(path, binary_data(**opts))
     end
   end
 end

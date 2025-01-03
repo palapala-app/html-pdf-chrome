@@ -180,7 +180,7 @@ end
 
 Palapala::Pdf.new(document,
                   header:,
-                  footer:).save("paged_css.pdf")
+                  footer:).save("paged_css.pdf", title: "Paged CSS", author: "Koen Handekyn", subject: "Paged CSS example")
 
 puts "Generated paged_css.pdf"
 
