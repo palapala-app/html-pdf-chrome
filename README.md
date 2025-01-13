@@ -180,12 +180,28 @@ Here's an example of how to use `render_to_string` to render a view template to 
 ```ruby
 def download_pdf
     html_string = render_to_string(template: "example/template", layout: "print", locals: { } )
-    pdf_data = Palapala::Pdf.new(html_string).binary_data
+    pdf_data = Palapala::Pdf.new(html_string).binary_data(skip_metadata: true)
     send_data pdf_data, filename: "document.pdf", type: "application/pdf"
 end
 ```
 
 In this example, `pdf_data` is the binary data of the PDF file. The `filename` option specifies the name of the file that will be downloaded by the user, and the `type` option specifies the MIME type of the file.
+
+In the below example we generate a PDF with metadata:
+
+```ruby
+def download_pdf
+    html_string = render_to_string(template: "example/template", layout: "print", locals: { } )
+    pdf_data = Palapala::Pdf.new(html_string).binary_data(
+        title: "Hello World from Palapala",
+        author: "Example User",
+        subject: "Sample Document",
+        producer: "Some Company",
+        creator: "PalapalaPDF"
+    )
+    send_data pdf_data, filename: "document.pdf", type: "application/pdf"
+end
+```
 
 ## Docker
 
